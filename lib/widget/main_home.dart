@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ungshowlocation/utility/my_style.dart';
 import 'package:ungshowlocation/utility/normal_dialog.dart';
 import 'package:ungshowlocation/widget/my_service.dart';
+import 'package:ungshowlocation/widget/register.dart';
 
 
 class MainHome extends StatefulWidget {
@@ -107,7 +108,10 @@ class _MainHomeState extends State<MainHome> {
 
   OutlineButton signUpButton() => OutlineButton(
         borderSide: BorderSide(color: MyStyle().darkColor),
-        onPressed: () {},
+        onPressed: () {
+          MaterialPageRoute route = MaterialPageRoute(builder: (value)=>Register());
+          Navigator.of(context).push(route);
+        },
         child: Text(
           'Sign Up',
           style: TextStyle(color: MyStyle().darkColor),
