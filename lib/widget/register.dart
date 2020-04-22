@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ungshowlocation/utility/my_style.dart';
+import 'package:ungshowlocation/utility/normal_dialog.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -8,13 +12,29 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   // Field
-  String gendle;
+  String gendle, name, email, password;
+  File file;
 
   // Method
   Widget registerButton() {
     return IconButton(
       icon: Icon(Icons.cloud_upload),
-      onPressed: () {},
+      onPressed: () {
+        if (file == null) {
+          normalDialog(
+              context, 'Non Choose Avatar', 'Please Tap Camera or Gallery');
+        } else if (name == null ||
+            name.isEmpty ||
+            email == null ||
+            email.isEmpty ||
+            password == null ||
+            password.isEmpty) {
+              normalDialog(context, 'Have Space', 'Please Fill Every Blank');
+            } else if (gendle == null) {
+              normalDialog(context, 'Non Choose Gendle', 'Please Tap Male or Female');
+            } else {
+            }
+      },
     );
   }
 
@@ -26,7 +46,8 @@ class _RegisterState extends State<Register> {
         backgroundColor: MyStyle().primaryColor,
         title: Text('Register'),
       ),
-      body: ListView(padding: EdgeInsets.only(bottom: 50.0),
+      body: ListView(
+        padding: EdgeInsets.only(bottom: 50.0),
         children: <Widget>[
           showAvatar(),
           showButton(),
@@ -39,7 +60,8 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Row chooseGendle() => Row(mainAxisAlignment: MainAxisAlignment.center,
+  Row chooseGendle() => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           maleRadio(),
           femaleRadio(),
@@ -51,7 +73,11 @@ class _RegisterState extends State<Register> {
           Radio(
             value: 'Male',
             groupValue: gendle,
-            onChanged: (value) {},
+            onChanged: (value) {
+              setState(() {
+                gendle = value;
+              });
+            },
           ),
           Text('Male'),
         ],
@@ -62,7 +88,11 @@ class _RegisterState extends State<Register> {
           Radio(
             value: 'Female',
             groupValue: gendle,
-            onChanged: (value) {},
+            onChanged: (value) {
+              setState(() {
+                gendle = value;
+              });
+            },
           ),
           Text('Female'),
         ],
@@ -80,6 +110,7 @@ class _RegisterState extends State<Register> {
         Container(
           width: 250.0,
           child: TextField(
+            onChanged: (value) => name = value.trim(),
             decoration: InputDecoration(
               helperText: subTitle,
               helperStyle: TextStyle(color: color),
@@ -108,6 +139,7 @@ class _RegisterState extends State<Register> {
         Container(
           width: 250.0,
           child: TextField(
+            onChanged: (value) => email = value.trim(),
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               helperText: subTitle,
@@ -134,6 +166,7 @@ class _RegisterState extends State<Register> {
         Container(
           width: 250.0,
           child: TextField(
+            onChanged: (value) => password = value.trim(),
             decoration: InputDecoration(
               helperText: subTitle,
               labelText: title,
@@ -153,12 +186,14 @@ class _RegisterState extends State<Register> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         RaisedButton.icon(
-          onPressed: () {},
+          onPressed: () {
+            getAvatar(ImageSource.camera);
+          },
           icon: Icon(Icons.add_a_photo),
           label: Text('Camera'),
         ),
         RaisedButton.icon(
-          onPressed: () {},
+          onPressed: () => getAvatar(ImageSource.gallery),
           icon: Icon(Icons.add_photo_alternate),
           label: Text('Gallery'),
         ),
@@ -166,9 +201,24 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Widget showAvatar() => Container(
-        margin: EdgeInsets.all(30.0),
-        height: MediaQuery.of(context).size.height * 0.3,
-        child: Image.asset('images/avatar.png'),
+  Future<void> getAvatar(ImageSource source) async {
+    try {
+      var result = await ImagePicker.pickImage(
+        source: source,
+        maxWidth: 800.0,
+        maxHeight: 800.0,
       );
+      setState(() {
+        file = result;
+      });
+    } catch (e) {}
+  }
+
+  Widget showAvatar() {
+    return Container(
+      margin: EdgeInsets.all(30.0),
+      height: MediaQuery.of(context).size.height * 0.3,
+      child: file == null ? Image.asset('images/avatar.png') : Image.file(file),
+    );
+  }
 } // Class
