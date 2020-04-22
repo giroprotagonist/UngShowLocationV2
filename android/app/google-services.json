@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "218219058943",
+    "firebase_url": "https://ungshowlocation.firebaseio.com",
+    "project_id": "ungshowlocation",
+    "storage_bucket": "ungshowlocation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218219058943:android:a5be9cd37e483b7cc19eca",
+        "android_client_info": {
+          "package_name": "com.flutterthailand.ungshowlocation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218219058943-tmfjju2gluvo94b9b7qmf07f92l2la3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmn_-9UJ6gnsvmsonwdIlg6l5EeyNjqEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218219058943-tmfjju2gluvo94b9b7qmf07f92l2la3n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

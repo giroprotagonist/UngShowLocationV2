@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>218219058943-lr91ilqum0bl4mcl8s3p0co8pfmhvpp4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.218219058943-lr91ilqum0bl4mcl8s3p0co8pfmhvpp4</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAFcBWR70RAELmyAwBI_8i4rTVt35iA29Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>218219058943</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.flutterthailand.ungshowlocation</string>
+	<key>PROJECT_ID</key>
+	<string>ungshowlocation</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ungshowlocation.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:218219058943:ios:1b59a28433d4a82ac19eca</string>
+	<key>DATABASE_URL</key>
+	<string>https://ungshowlocation.firebaseio.com</string>
+</dict>
+</plist>
