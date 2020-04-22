@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:ungshowlocation/utility/my_style.dart';
 import 'package:ungshowlocation/widget/add_location.dart';
 import 'package:ungshowlocation/widget/main_home.dart';
@@ -14,12 +15,18 @@ class MyService extends StatefulWidget {
 
 class _MyServiceState extends State<MyService> {
   // Field
-  Widget currentWidget = ShowMap();
+  Widget currentWidget;
+  String name, email, urlAvatar;
+  double lat, lng;
 
   // Method
   @override
   void initState() {
     super.initState();
+
+    findLatLng();
+
+    findNameAnAvatar();
 
     var object = widget.currentWidget;
     if (object != null) {
@@ -27,6 +34,39 @@ class _MyServiceState extends State<MyService> {
         currentWidget = object;
       });
     }
+  }
+
+  Future<void> findLatLng() async {
+    LocationData locationData = await findLocation();
+    setState(() {
+      lat = locationData.latitude;
+      lng = locationData.longitude;
+      print('lat =>>> $lat, lng ===>> $lng');
+      currentWidget = ShowMap(
+        lat: lat,
+        lng: lng,
+      );
+    });
+  }
+
+  Future<LocationData> findLocation() async {
+    var location = Location();
+    try {
+      return await location.getLocation();
+    } catch (e) {
+      print('e location = ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<void> findNameAnAvatar() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser = await auth.currentUser();
+    setState(() {
+      name = firebaseUser.displayName;
+      email = firebaseUser.email;
+      urlAvatar = firebaseUser.photoUrl;
+    });
   }
 
   Widget myDrawer() {
@@ -46,7 +86,7 @@ class _MyServiceState extends State<MyService> {
     return ListTile(
       onTap: () {
         setState(() {
-          currentWidget = ShowMap();
+          currentWidget = ShowMap(lat: lat,lng: lng,);
         });
         Navigator.of(context).pop();
       },
@@ -64,7 +104,10 @@ class _MyServiceState extends State<MyService> {
     return ListTile(
       onTap: () {
         setState(() {
-          currentWidget = AddLocation();
+          currentWidget = AddLocation(
+            lat: lat,
+            lng: lng,
+          );
         });
         Navigator.of(context).pop();
       },
@@ -103,27 +146,35 @@ class _MyServiceState extends State<MyService> {
   }
 
   UserAccountsDrawerHeader showHead() {
+    if (name == null) {
+      name = '';
+    } else if (email == null) {
+      email = '';
+    }
+    if (urlAvatar == null) {
+      urlAvatar =
+          'https://firebasestorage.googleapis.com/v0/b/ungshowlocation.appspot.com/o/Avatar%2Favatar.png?alt=media&token=5525d38c-9ba7-4579-ab31-ec4700671355';
+    }
     return UserAccountsDrawerHeader(
-      currentAccountPicture: Image.asset('images/police.png'),
+      currentAccountPicture: Image.network(urlAvatar),
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('images/wall.jpg'),
           fit: BoxFit.cover,
         ),
       ),
-      accountName: Text('Name'),
-      accountEmail: Text('Email'),
+      accountName: Text('$name Login'),
+      accountEmail: Text('$email'),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: myDrawer(),
-      appBar: AppBar(
-        title: Text('My Service'),
-      ),
-      body: currentWidget,
-    );
+        drawer: myDrawer(),
+        appBar: AppBar(
+          title: Text('My Service'),
+        ),
+        body: currentWidget == null ? MyStyle().showPrograss() : currentWidget);
   }
 }

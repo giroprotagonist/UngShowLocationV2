@@ -5,6 +5,10 @@ import 'package:ungshowlocation/widget/add_location.dart';
 import 'package:ungshowlocation/widget/my_service.dart';
 
 class ShowMap extends StatefulWidget {
+  final double lat;
+  final double lng;
+  ShowMap({Key key, this.lat, this.lng}) : super(key: key);
+
   @override
   _ShowMapState createState() => _ShowMapState();
 }
@@ -19,7 +23,11 @@ class _ShowMapState extends State<ShowMap> {
   @override
   void initState() {
     super.initState();
-    findLatLng();
+    // findLatLng();
+    setState(() {
+      lat = widget.lat;
+      lng = widget.lng;
+    });
 
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(48, 48)), 'images/police2.png')
@@ -93,7 +101,7 @@ class _ShowMapState extends State<ShowMap> {
   Widget showMap() {
     // lat = 13.680218;
     // lng = 100.587582;
-
+    print('latlng on showmap ===>>> $lat, $lng');
     LatLng centerLatLng = LatLng(lat, lng);
     CameraPosition cameraPosition =
         CameraPosition(target: centerLatLng, zoom: 16.0);
@@ -112,21 +120,31 @@ class _ShowMapState extends State<ShowMap> {
   }
 
   Widget addButton() {
-    return Row(mainAxisAlignment: MainAxisAlignment.end,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Column(mainAxisAlignment: MainAxisAlignment.end,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Container(margin: EdgeInsets.only(right: 40.0, bottom: 40.0,),
+            Container(
+              margin: EdgeInsets.only(
+                right: 40.0,
+                bottom: 40.0,
+              ),
               child: FloatingActionButton(
-                  onPressed: () {
-                    MaterialPageRoute route = MaterialPageRoute(builder: (value)=>MyService(currentWidget: AddLocation(),));
-                    Navigator.of(context).pushAndRemoveUntil(route, (value)=>false);
-                  },
-                  child: Icon(
-                    Icons.add_circle,
-                    size: 36.0,
-                  ),
+                onPressed: () {
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (value) => MyService(
+                            currentWidget: AddLocation(),
+                          ));
+                  Navigator.of(context)
+                      .pushAndRemoveUntil(route, (value) => false);
+                },
+                child: Icon(
+                  Icons.add_circle,
+                  size: 36.0,
                 ),
+              ),
             ),
           ],
         ),
@@ -136,10 +154,12 @@ class _ShowMapState extends State<ShowMap> {
 
   @override
   Widget build(BuildContext context) {
-    return lat == null
-        ? Center(
-            child: CircularProgressIndicator(),
-          )
-        : showMap();
+    return Scaffold(
+      body: lat == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : showMap(),
+    );
   }
 }
