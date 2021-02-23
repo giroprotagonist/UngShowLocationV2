@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ungshowlocation/utility/my_style.dart';
 import 'package:ungshowlocation/utility/normal_dialog.dart';
 import 'package:ungshowlocation/widget/my_service.dart';
-import 'package:ungshowlocation/widget/show_map.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -271,6 +270,7 @@ class _RegisterState extends State<Register> {
 
   Future<void> getAvatar(ImageSource source) async {
     try {
+      // ignore: deprecated_member_use
       var result = await ImagePicker.pickImage(
         source: source,
         maxWidth: 800.0,

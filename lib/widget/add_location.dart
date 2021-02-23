@@ -224,6 +224,7 @@ class _AddLocationState extends State<AddLocation> {
 
   Future<Null> chooseImage(ImageSource source) async {
     try {
+      // ignore: deprecated_member_use
       var object = await ImagePicker.pickImage(
         source: source,
         maxWidth: 800.0,

@@ -58,7 +58,7 @@ class _ShowMapState extends State<ShowMap> {
     Firestore firestore = Firestore.instance;
     CollectionReference collectionReference =
         firestore.collection('MarkerCollect');
-    await collectionReference.snapshots().listen((event) {
+    collectionReference.snapshots().listen((event) {
       List<DocumentSnapshot> snapshots = event.documents;
       for (var map in snapshots) {
         MarkerCollectModel model = MarkerCollectModel.fromMap(map.data);

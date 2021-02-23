@@ -32,7 +32,7 @@ class _DetailMarkerState extends State<DetailMarker> {
     print('uid ===>> ${model.uid}');
     Firestore firestore = Firestore.instance;
     CollectionReference reference = firestore.collection('UserCollect');
-    await reference.document(model.uid).snapshots().listen((event) {
+    reference.document(model.uid).snapshots().listen((event) {
       var map = event.data;
       setState(() {
         userModel = UserModel.fromJSON(map);
@@ -108,18 +108,6 @@ class _DetailMarkerState extends State<DetailMarker> {
           initialValue: model.name,
         ),
         children: <Widget>[
-          RaisedButton(
-            onPressed: () {
-              print('edtiName ===> $editName');
-
-              Firestore firestore = Firestore.instance;
-              CollectionReference reference = firestore.collection('MarkerCollect');
-
-
-              // Navigator.pop(context);
-            },
-            child: Text('OK'),
-          )
         ],
       ),
     );
